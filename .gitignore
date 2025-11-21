@@ -13,24 +13,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Environment files
+# Env files
 .env
 .env.local
-.env.development.local
 .env.production.local
+.env.development.local
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Editor folders
+# Editor
 .vscode/
 .idea/
 
-# Lockfiles
+# Lock files
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
-
-# Supabase local config
-supabase/
