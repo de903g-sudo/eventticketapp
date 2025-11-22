@@ -12,6 +12,7 @@ import scannerRoutes from "./routes/scanner.routes"
 import organizerRoutes from "./routes/organizer.routes"
 import tempRoutes from "./routes/temp.routes"
 import publicRoutes from "./routes/public.routes"
+import mockPaymentRoutes from "./routes/payments/mockPaymentRoutes";
 
 // 3. Initialize express app
 const app = express()
@@ -34,6 +35,7 @@ app.use("/api/scanner", scannerRoutes)
 app.use("/api/organizer", organizerRoutes)
 app.use("/temp", tempRoutes)
 app.use("/api", publicRoutes)
+app.use("/api/payments", mockPaymentRoutes);
 
 // 7. Start server
 const PORT = process.env.PORT || 4000
