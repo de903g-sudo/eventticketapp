@@ -1,32 +1,13 @@
-import express from "express"
-import { requireAuth } from "../middleware/auth.middleware"
-import {
-  getEventsHandler,
-  createEventHandler,
-  createTicketTypeHandler
-} from "../controllers/organizer.controller"
+import express from "express";
+import { createEventHandler } from "../controllers/organizer.controller";
+import { createTicketTypeHandler } from "../controllers/ticketType.controller";
 
-const router = express.Router()
+const router = express.Router();
 
-// Get all events for logged-in organizer
-router.get(
-  "/events",
-  requireAuth(["organizer", "admin"]),
-  getEventsHandler
-)
+// Create event
+router.post("/events/create", createEventHandler);
 
-// Create new event
-router.post(
-  "/events",
-  requireAuth(["organizer", "admin"]),
-  createEventHandler
-)
+// Create ticket type
+router.post("/ticket-types/create", createTicketTypeHandler);
 
-// Create ticket types for specific event
-router.post(
-  "/events/:id/ticket-types",
-  requireAuth(["organizer", "admin"]),
-  createTicketTypeHandler
-)
-
-export default router
+export default router;
