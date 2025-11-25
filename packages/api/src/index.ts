@@ -8,11 +8,13 @@ dotenv.config()
 import express from "express"
 import cors from "cors"
 import authRoutes from "./routes/auth.routes"
-import scannerRoutes from "./routes/scanner.routes"
+import scannerRoutes from "./routes/scannerRoutes"
 import organizerRoutes from "./routes/organizer.routes"
 import tempRoutes from "./routes/temp.routes"
 import publicRoutes from "./routes/public.routes"
 import mockPaymentRoutes from "./routes/payments/mockPaymentRoutes";
+import ordersRoutes from "./routes/orders.routes";
+import ticketRoutes from "./routes/tickets.routes";
 
 // 3. Initialize express app
 const app = express()
@@ -34,8 +36,10 @@ app.use("/api/auth", authRoutes)
 app.use("/api/scanner", scannerRoutes)
 app.use("/api/organizer", organizerRoutes)
 app.use("/temp", tempRoutes)
-app.use("/api", publicRoutes)
+app.use("/api", publicRoutes);
+app.use("/api", ordersRoutes);
 app.use("/api/payments", mockPaymentRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 // 7. Start server
 const PORT = process.env.PORT || 4000

@@ -13,3 +13,11 @@ export function signJwt(payload: object) {
 export function verifyJwt<T = any>(token: string): T {
   return jwt.verify(token, JWT_SECRET) as T
 }
+
+export function generateToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
+}
+
+export function verifyToken(token) {
+  return jwt.verify(token, process.env.JWT_SECRET);
+}

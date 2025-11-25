@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { mockPaymentController } from "../../controllers/payments/mockPaymentController";
+import express from "express";
+import { mockPaymentSuccess } from "../../controllers/payments/mockPaymentController";
 
-const router = Router();
+const router = express.Router();
 
-router.post("/mock-success", mockPaymentController);
+router.post("/mock/success", mockPaymentSuccess);
 
 export default router;

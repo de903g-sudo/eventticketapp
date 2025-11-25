@@ -32,22 +32,6 @@ export const signupHandler = async (req: Request, res: Response) => {
       return res.status(400).json({ error: userError.message });
     }
 
-    // AUTO CREATE ORGANIZER PROFILE
-    if (role === "organizer") {
-      const { error: orgError } = await supabase
-        .from("organizers")
-        .insert({
-          user_id: user.id,   // IMPORTANT
-          company_name: "",
-          gstin: "",
-          address: "",
-        });
-
-      if (orgError) {
-        return res.status(400).json({ error: orgError.message });
-      }
-    }
-
     return res.status(201).json({
       message: "Signup successful",
       user_id: user.id,

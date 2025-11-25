@@ -2,29 +2,105 @@
 
 import { supabase } from "../utils/supabase";
 
+export const createOrganizerProfile = async (req, res) => {
+  try {
+    const {
+      user_id,
+      company_name,
+      gstin,
+      address,
+      contact_email,
+      contact_phone,
+    } = req.body;
+
+    if (!user_id || !company_name || !gstin || !address || !contact_email || !contact_phone) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const { data, error } = await supabase
+      .from("organizers")
+      .insert([
+        {
+          user_id,
+          company_name,
+          gstin,
+          address,
+          contact_email,
+          contact_phone,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.json({
+      success: true,
+      organizer: data,
+    });
+  } catch (err) {
+    return res.status(500).json({ error: "internal_server_error" });
+  }
+};
+
+
 // ======================================================================
 // CREATE EVENT
 // ======================================================================
+
 export const createEventHandler = async (req, res) => {
   try {
-    const { organizer_id, name, description, event_date, venue, banner_url } = req.body;
+    const {
+      organizer_id,
+      name,
+      slug,
+      description,
+      venue_name,
+      venue_address,
+      city,
+      state,
+      start_datetime,
+      end_datetime,
+      status,
+      banner_image_url,
+      timezone
+    } = req.body;
 
-    if (!organizer_id || !name || !event_date || !venue) {
-      return res.status(400).json({ 
-        error: "Missing required fields" 
-      });
+    if (
+      !organizer_id ||
+      !name ||
+      !slug ||
+      !venue_name ||
+      !venue_address ||
+      !city ||
+      !state ||
+      !start_datetime ||
+      !end_datetime
+    ) {
+      return res.status(400).json({ error: "Missing required fields" });
     }
 
     const { data, error } = await supabase
       .from("events")
-      .insert({
-        organizer_id,
-        name,
-        description,
-        event_date,
-        venue,
-        banner_url,
-      })
+      .insert([
+        {
+          organizer_id,
+          name,
+          slug,
+          description,
+          venue_name,
+          venue_address,
+          city,
+          state,
+          start_datetime,
+          end_datetime,
+          status: status || "draft",
+          banner_image_url: banner_image_url || null,
+          timezone: timezone || "Asia/Kolkata"
+        }
+      ])
       .select()
       .single();
 
@@ -33,9 +109,9 @@ export const createEventHandler = async (req, res) => {
       return res.status(400).json({ error: error.message });
     }
 
-    return res.status(200).json({
+    return res.json({
       success: true,
-      event: data,
+      event: data
     });
 
   } catch (err) {

@@ -1,13 +1,11 @@
 import express from "express";
-import { createEventHandler } from "../controllers/organizer.controller";
+import { createEventHandler, createOrganizerProfile } from "../controllers/organizer.controller";
 import { createTicketTypeHandler } from "../controllers/ticketType.controller";
 
 const router = express.Router();
 
-// Create event
-router.post("/events/create", createEventHandler);
-
-// Create ticket type
-router.post("/ticket-types/create", createTicketTypeHandler);
+router.post("/profile", createOrganizerProfile);
+router.post("/events", createEventHandler);
+router.post("/events/:event_id/ticket-types", createTicketTypeHandler);
 
 export default router;
