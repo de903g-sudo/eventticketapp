@@ -1,5 +1,5 @@
 import { supabase } from "../../utils/supabase";
-import { generateTicketsForOrder } from "../../services/tickets/ticketService";
+import { generateticketsForOrder } from "../../services/tickets/ticketService";
 
 export const mockPaymentSuccess = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ export const mockPaymentSuccess = async (req, res) => {
       return res.status(400).json({ error: "order_id required" });
     }
 
-    // Fetch order
+    // 1. Fetch order
     const { data: order, error: orderError } = await supabase
       .from("orders")
       .select("*")
@@ -20,13 +20,13 @@ export const mockPaymentSuccess = async (req, res) => {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    // Update order status
+    // 2. Update order status
     await supabase
       .from("orders")
       .update({ status: "paid" })
       .eq("id", order_id);
 
-    // Insert into payments table
+    // 3. Insert into payments table
     await supabase.from("payments").insert([
       {
         order_id: order_id,
@@ -38,16 +38,16 @@ export const mockPaymentSuccess = async (req, res) => {
       }
     ]);
 
-    // Generate tickets
-    await generateTicketsForOrder(order_id);
+    // 4. Generate all tickets for this order (QR + PDF)
+    await generateticketsForOrder(order_id);
 
     return res.json({
       success: true,
-      message: "Payment success, tickets generated",
+      message: "Mock payment success. Tickets generated.",
       order_id
     });
   } catch (err) {
-    console.error(err);
+    console.error("mockPaymentSuccess error:", err);
     return res.status(500).json({ error: "internal_server_error" });
   }
 };

@@ -2,7 +2,7 @@ import { Buffer } from "buffer";
 import PDFDocument from "pdfkit";
 import QRCode from "qrcode";
 
-export const generateTicketPDF = async (ticket): Promise<Buffer> => {
+export const generateticketPDF = async (ticket): Promise<Buffer> => {
   return new Promise(async (resolve, reject) => {
     try {
       const doc = new PDFDocument({ size: "A4", margin: 50 });

@@ -15,6 +15,7 @@ import publicRoutes from "./routes/public.routes"
 import mockPaymentRoutes from "./routes/payments/mockPaymentRoutes";
 import ordersRoutes from "./routes/orders.routes";
 import ticketRoutes from "./routes/tickets.routes";
+import ticketsPdfRoutes from "./routes/ticketsPdfRoutes";
 
 // 3. Initialize express app
 const app = express()
@@ -40,7 +41,7 @@ app.use("/api", publicRoutes);
 app.use("/api", ordersRoutes);
 app.use("/api/payments", mockPaymentRoutes);
 app.use("/api/tickets", ticketRoutes);
-
+app.use("/api/tickets", ticketsPdfRoutes);
 // 7. Start server
 const PORT = process.env.PORT || 4000
 

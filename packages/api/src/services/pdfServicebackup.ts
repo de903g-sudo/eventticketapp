@@ -2,7 +2,7 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
 
-export async function generateTicketPDF(ticket, savePath: string) {
+export async function generateticketPDF(ticket, savePath: string) {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ margin: 40 });
 
