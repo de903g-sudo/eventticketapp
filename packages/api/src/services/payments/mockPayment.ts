@@ -1,5 +1,5 @@
 import { supabase } from "../../utils/supabase";
-import { createTicketsForOrder } from "../tickets/ticketGenerator";
+import { generateticketsForOrder } from "../../services/tickets/ticketService";
 
 export const mockPaymentSuccess = async (order_id) => {
 
@@ -28,7 +28,7 @@ export const mockPaymentSuccess = async (order_id) => {
     .eq("id", order_id);
 
   // 4. Generate tickets
-  const tickets = await createTicketsForOrder(order);
+  const tickets = await generateticketsForOrder(order);
 
   return {
     success: true,

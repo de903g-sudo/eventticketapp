@@ -11,32 +11,30 @@ import QRCode from "qrcode";
 export async function generateticketsForOrder(orderId: string) {
   // 1. Load order items + event + ticket types
   const { data: items, error: itemsError } = await supabase
-    .from("order_items")
-    .select(
-      `
+  .from("order_items")
+  .select(`
+    id,
+    order_id,
+    ticket_type_id,
+    quantity,
+    ticket_types (
       id,
-      order_id,
-      ticket_type_id,
-      quantity,
-      ticket_types (
-        id,
-        name,
-        event_id
-      ),
-      events:event_id (
+      name,
+      event_id,
+      events (
         id,
         name,
         venue_name,
         start_datetime,
         organizer_id
-      ),
-      orders:order_id (
-        id,
-        customer_id
       )
-    `
+    ),
+    orders:order_id (
+      id,
+      customer_id
     )
-    .eq("order_id", orderId);
+  `)
+  .eq("order_id", orderId);
 
   if (itemsError) throw itemsError;
   if (!items || items.length === 0)
